@@ -15,6 +15,10 @@ scikit-learn = "^1.0.2"
 opencv-python = "^4.5.5"
 
 [tool.poetry.dev-dependencies]
+tqdm = "^4.64.0"
+jupyter = "^1.0.0"
+pandas = "^1.4.2"
+seaborn = "^0.11.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
