@@ -42,7 +42,9 @@ PATH_TO_RESOURCES = "./data/train" # Adapt to your data folder
 
 
 def get_image_label(path: Path) -> tuple[np.ndarray, int] | None:
-
+    """
+    Returns a tupple with the image loaded from `path` as an RGB np.array and the class of the image.
+    """
     if path.suffix != ".png" and not path.parent.name.isdigit():
         return 
 
