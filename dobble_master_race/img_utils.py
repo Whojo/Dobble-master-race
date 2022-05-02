@@ -13,7 +13,7 @@ def _flood_img_border(img, line, mask, start, index):
             break
     
     
-def mask_with_inner(img_base, gray_threshold):
+def mask_with_inner(img_base: np.array, gray_threshold: int) -> np.array:
     img = img_base.copy()
     mask = (img.sum(axis=-1) < (gray_threshold * 3))
     # Cf floodFill doc
