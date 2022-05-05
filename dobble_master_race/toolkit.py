@@ -50,6 +50,17 @@ def get_image_label(path: Path) -> tuple[np.ndarray, int] | None:
 
     return cv2.cvtColor(cv2.imread(path.as_posix()), cv2.COLOR_BGR2RGB), int(path.parent.name)
 
+def _get_test_set_sample(Y: np.array) -> np.array:
+    nb_class = np.max(Y)
+
+    rand = np.random.randint(low=0, high=5, size=nb_class)
+    test_idx = np.arange(nb_class) * 5 + rand
+
+    test_set = np.full_like(Y, False, dtype=bool)
+    test_set[test_idx] = True
+
+    return test_set
+
 def get_data_set(path: str = PATH_TO_RESOURCES) -> tuple[np.ndarray, np.ndarray]:
     """
     Returns X (features) and Y (labels) as a tupple of np.array.
@@ -60,5 +71,10 @@ def get_data_set(path: str = PATH_TO_RESOURCES) -> tuple[np.ndarray, np.ndarray]
     label_image = filter(None, map(get_image_label, img_loc))
 
     X, Y = zip(*label_image)
+    X, Y = np.array(X, dtype=object), np.array(Y, dtype=int)
 
-    return np.array(X, dtype=object), np.array(Y, dtype=int)
+    test_set = _get_test_set_sample(Y)
+    X_test, Y_test = X[test_set], Y[test_set]
+    X_train, Y_train = X[~test_set], Y[~test_set]
+
+    return (X_train, Y_train), (X_test, Y_test)
